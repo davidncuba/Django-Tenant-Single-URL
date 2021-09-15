@@ -98,8 +98,8 @@ WSGI_APPLICATION = "setup.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django_tenants.postgresql_backend",
-        "NAME": "facilworkv2",
-        "USER": "postgres",
+        "NAME": "",
+        "USER": "",
         "PASSWORD": "",
         "HOST": "127.0.0.1",
         "PORT": "5432",
