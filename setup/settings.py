@@ -39,7 +39,7 @@ SHARED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "sweet_shared",
+    "rest_framework",
 ]
 TENANT_APPS = [
     "django.contrib.admin",
@@ -49,16 +49,18 @@ TENANT_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "sweet_tenant",
+    "knox",
+    "login",
 ]
 
 INSTALLED_APPS = list(SHARED_APPS) + [
     app for app in TENANT_APPS if app not in SHARED_APPS
 ]
 TENANT_MODEL = "client.Client"  # app.Model
-TENANT_DOMAIN_MODEL = "client.Domain"  # app.Model
+TENANT_DOMAIN_MODEL = "client.Client"  # app.Model
 
 MIDDLEWARE = [
-    "django_tenants.middleware.main.TenantMainMiddleware",
+    "client.middleware.middleware.RequestIDTenantMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -148,3 +150,7 @@ STATIC_URL = "/static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SHOW_PUBLIC_IF_NO_TENANT_FOUND = True
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
+}
